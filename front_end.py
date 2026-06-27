@@ -10,6 +10,8 @@ import streamlit as st
 
 load_dotenv()
 
+st.title("YOUTUBE CHAT")
+st.header("Csutomised youtube Q&A RAG system!!!")
 yt_api = YouTubeTranscriptApi()
 output_parser = StrOutputParser()
 embeddings = OpenAIEmbeddings(model='text-embedding-3-small')
