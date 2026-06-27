@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_experimental.text_splitter import SemanticChunker
 from langchain_core.prompts import PromptTemplate
 from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv
@@ -42,7 +42,7 @@ if st.button("Submit") and video_id:
         st.error(f"Couldn't fetch transcript: {e}")
         st.stop()
 
-    splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    splitter = SemanticChunker(embeddings, breakpoint_threshold_type = 'percentile')
     chunks = splitter.create_documents([transcripts])
 
     vector_store = FAISS.from_documents(chunks, embeddings)
